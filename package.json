@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/beritera/cozinha-facil/issues"
   },
-  "homepage": "https://github.com/beritera/cozinha-facil#readme"
+  "homepage": "https://github.com/beritera/cozinha-facil#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
