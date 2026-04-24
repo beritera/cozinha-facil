@@ -1,19 +1,29 @@
-const recipes = [];
-
-exports.getRecipes = (req, res) => {
-  res.json(recipes);
-};
-
-exports.createRecipe = (req, res) => {
+exports.updateRecipe = (req, res) => {
+  const { id } = req.params;
   const { title, description } = req.body;
 
-  const newRecipe = {
-    id: recipes.length + 1,
-    title,
-    description,
-  };
+  const recipe = recipes.find(r => r.id == id);
 
-  recipes.push(newRecipe);
+  if (!recipe) {
+    return res.status(404).json({ message: 'Receita não encontrada' });
+  }
 
-  res.status(201).json(newRecipe);
+  recipe.title = title || recipe.title;
+  recipe.description = description || recipe.description;
+
+  res.json(recipe);
+};
+
+exports.deleteRecipe = (req, res) => {
+  const { id } = req.params;
+
+  const index = recipes.findIndex(r => r.id == id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: 'Receita não encontrada' });
+  }
+
+  recipes.splice(index, 1);
+
+  res.json({ message: 'Receita removida com sucesso' });
 };
