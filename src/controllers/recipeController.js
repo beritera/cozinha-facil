@@ -1,49 +1,68 @@
-const recipes = [];
+const pool = require('../config/database');
 
-exports.getRecipes = (req, res) => {
-  res.json(recipes);
+exports.getRecipes = async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM recipes ORDER BY id ASC');
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao listar receitas' });
+  }
 };
 
-exports.createRecipe = (req, res) => {
+exports.createRecipe = async (req, res) => {
   const { title, description } = req.body;
 
-  const newRecipe = {
-    id: recipes.length + 1,
-    title,
-    description,
-  };
+  try {
+    const result = await pool.query(
+      'INSERT INTO recipes (title, description) VALUES ($1, $2) RETURNING *',
+      [title, description]
+    );
 
-  recipes.push(newRecipe);
-
-  res.status(201).json(newRecipe);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao criar receita' });
+  }
 };
 
-exports.updateRecipe = (req, res) => {
+exports.updateRecipe = async (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
 
-  const recipe = recipes.find((recipe) => recipe.id == id);
+  try {
+    const result = await pool.query(
+      `UPDATE recipes 
+       SET title = COALESCE($1, title),
+           description = COALESCE($2, description)
+       WHERE id = $3
+       RETURNING *`,
+      [title, description, id]
+    );
 
-  if (!recipe) {
-    return res.status(404).json({ message: 'Receita não encontrada' });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Receita não encontrada' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar receita' });
   }
-
-  recipe.title = title || recipe.title;
-  recipe.description = description || recipe.description;
-
-  res.json(recipe);
 };
 
-exports.deleteRecipe = (req, res) => {
+exports.deleteRecipe = async (req, res) => {
   const { id } = req.params;
 
-  const index = recipes.findIndex((recipe) => recipe.id == id);
+  try {
+    const result = await pool.query(
+      'DELETE FROM recipes WHERE id = $1 RETURNING *',
+      [id]
+    );
 
-  if (index === -1) {
-    return res.status(404).json({ message: 'Receita não encontrada' });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Receita não encontrada' });
+    }
+
+    res.json({ message: 'Receita removida com sucesso' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao remover receita' });
   }
-
-  recipes.splice(index, 1);
-
-  res.json({ message: 'Receita removida com sucesso' });
 };
