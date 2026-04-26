@@ -21,7 +21,7 @@ async function loadRecipes() {
       <h3>${recipe.title}</h3>
       <p>${recipe.description || 'Sem descrição'}</p>
 
-      <button onclick="editRecipe(${recipe.id}, '${recipe.title}', '${recipe.description || ''}')">
+      <button class="edit-btn">
         Editar
       </button>
 
@@ -29,6 +29,14 @@ async function loadRecipes() {
         Excluir
       </button>
     `;
+
+    const editButton = card.querySelector('.edit-btn');
+
+    editButton.addEventListener('click', () => {
+      editingRecipeId = recipe.id;
+      titleInput.value = recipe.title;
+      descriptionInput.value = recipe.description || '';
+    });
 
     recipesList.appendChild(card);
   });
