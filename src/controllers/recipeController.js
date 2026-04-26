@@ -12,6 +12,10 @@ exports.getRecipes = async (req, res) => {
 exports.createRecipe = async (req, res) => {
   const { title, description } = req.body;
 
+  if (!title || title.trim() === '') {
+    return res.status(400).json({ message: 'Título é obrigatório' });
+  }
+
   try {
     const result = await pool.query(
       'INSERT INTO recipes (title, description) VALUES ($1, $2) RETURNING *',
