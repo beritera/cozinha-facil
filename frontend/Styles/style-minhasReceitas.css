@@ -1,0 +1,189 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #ffb703, #fb8500);
+  color: #1f1f1f;
+}
+
+.container {
+  max-width: 920px;
+  margin: 32px auto;
+  padding: 36px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 22px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.title {
+  margin-left: 297px;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-left: 75px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1f1f1f;
+  font-weight: 700;
+  background: #fff4d6;
+  border: 1px solid #ffd166;
+  padding: 10px 16px;
+  border-radius: 14px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  background: #ffb703;
+  transform: translateY(-2px);
+}
+
+.form-section {
+  padding: 26px;
+  background: #fff8e7;
+  border: 1px solid #ffd166;
+  border-radius: 18px;
+  margin-bottom: 32px;
+}
+
+.form-subtitle {
+  margin: 0 0 18px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 14px;
+  border: 1px solid #ead7aa;
+  background: white;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #fb8500;
+  box-shadow: 0 0 0 4px rgba(251, 133, 0, 0.18);
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+button[type='submit'] {
+  padding: 15px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
+  color: white;
+  font-size: 15px;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+h2 {
+  margin: 0 0 18px;
+  font-size: 26px;
+}
+
+.recipe-card {
+  padding: 24px;
+  margin-bottom: 16px;
+  background: white;
+  border: 1px solid #eee0bf;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: 0.2s;
+}
+
+.recipe-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+}
+
+.recipe-card p {
+  white-space: pre-line;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  color: white;
+}
+
+.edit-btn {
+  background: #2563eb;
+  margin-right: 8px;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+@media (max-width: 760px) {
+  .container {
+    margin: 16px;
+    padding: 22px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    width: 100%;
+  }
+
+  .nav-links a {
+    flex: 1;
+    text-align: center;
+  }
+}
