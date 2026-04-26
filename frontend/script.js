@@ -36,6 +36,8 @@ async function loadRecipes() {
       editingRecipeId = recipe.id;
       titleInput.value = recipe.title;
       descriptionInput.value = recipe.description || '';
+
+      form.querySelector('button').textContent = 'Salvar Alteração';
     });
 
     recipesList.appendChild(card);
@@ -53,13 +55,14 @@ form.addEventListener('submit', async (event) => {
   if (editingRecipeId) {
     await fetch(`${API_URL}/${editingRecipeId}`, {
       method: 'PUT',
-      headers: {
+      headers: {    
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(recipeData),
     });
 
     editingRecipeId = null;
+    form.querySelector('button').textContent = 'Cadastrar Receita';
   } else {
     await fetch(API_URL, {
       method: 'POST',
