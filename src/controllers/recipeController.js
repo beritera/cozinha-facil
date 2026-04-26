@@ -42,6 +42,10 @@ exports.updateRecipe = async (req, res) => {
       [title, description, id]
     );
 
+    if (title !== undefined && title.trim() === '') {
+  return res.status(400).json({ message: 'Título não pode ser vazio' });
+}
+
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Receita não encontrada' });
     }
